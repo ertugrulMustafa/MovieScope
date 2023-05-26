@@ -1,13 +1,299 @@
+@import url('https://fonts.cdnfonts.com/css/aok-buenos-aires');
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'AOK Buenos Aires', sans-serif;
+  background-color: #0b1b47fa !important;
+  position: relative;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/background.jpg');
+  filter: blur(3px);
+  z-index: -1;
+}
+
+/* Update navbar styles */
+.navbar {
+  background-color: #091436fa !important; /* Dark blue */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+
+}
+
+.navbar-brand .navbar-text {
+  font-family: 'AOK Buenos Aires', sans-serif;
+  font-size: 24px;
+  font-weight: bold; /* Make the text thicker */
+  color: #c41b1b !important; /* White text */
+ 
+}
+
+.nav-item .nav-link {
+  font-family: 'AOK Buenos Aires', sans-serif;
+  font-size: 16px;
+  font-weight: bold; /* Make the text thicker */
+  color: #c41b1b !important; /* White text */
+  margin-left: 100px;
+}
+
+.navbar-brand .navbar-text small {
+  font-size: 12px;
+  color: #fff !important; /* White text */
+  margin-top: 4px;
+}
+
+.navbar-nav .nav-link {
+  color: #fff !important; /* White text */
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+  color: #f00 !important; /* Red text on hover/focus */
+}
+
+.navbar-nav .nav-link.signup-btn,
+.navbar-nav .nav-link.login-btn {
+  border: 1px solid #fff;
+  padding: 8px 16px;
+  margin-left: 10px;
+  border-radius: 4px;
+  color: #fff !important;
+  transition: background-color 0.3s;
+}
+
+.navbar-nav .nav-link.signup-btn:hover,
+.navbar-nav .nav-link.login-btn:hover {
+  background-color: #f00;
+  color: #ffffff !important;
+}
+
+.navbar-nav .nav-link.signup-btn:focus,
+.navbar-nav .nav-link.login-btn:focus {
+  outline: none;
+  box-shadow: none;
+  background-color: #f00;
+  color: #fafafa !important;
+}
+
+/* Customize sign up and login forms */
+.modal-header {
+  display: none; /* Hide the header */
+}
+
+.modal-dialog {
+  margin-top: 100px; /* Adjust the modal's top margin */
+}
+
+.modal-content {
+  background-color: #141f2d; /* Dark blue */
+  color: white;
+}
+
+.modal-title {
+  color: white;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+form {
+  margin-bottom: 0; /* Remove the form's bottom margin */
+}
+
+label {
+  color: white;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  background-color: #192939;
+  color: white;
+  border-color: #36465d;
+}
+
+button[type="submit"] {
+  background-color: red;
+  color: white;
+}
+
+/* Customize search bar */
+.custom-search-input {
+  width: 1200px !important; /* Adjust the width as per your preference */
+  border: 4px solid black;
+}
+
+/* Customize search button */
+.custom-search-btn {
+  background-color: rgb(255, 255, 255) !important;
+  color: rgba(0, 0, 0, 1)!important;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  margin-left: -7px;
+
+}
+
+.custom-search-btn:hover {
+  color: rgb(255, 255, 255)!important;
+  background-color: rgb(241, 4, 4) !important;
+}
+
+.movies-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 100px;
+  max-width: 1200px; /* Set a maximum width for the container */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.movie-card {
+  flex: 0 0 calc(25% - 30px); /* Adjust the width calculation to accommodate 4 cards per row */
+  height: 400px;
+  margin: 15px;
+  text-align: center;
+  background-color: none;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.movie-image img {
+  width: 350px;
+  height: 400px;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
+
+.movie-card:hover .movie-overlay {
+  opacity: 1;
+}
+
+.movie-card .movie-image {
+  position: relative;
+}
+
+.movie-card .movie-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.movie-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.movie-card .movie-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin-bottom: 30px;
+  color: white;
+  transform: translateY(100%);
+  transition: transform 0.3s;
+}
+
+.movie-card:hover .movie-info {
+  transform: translateY(0%);
+}
+
+.rating {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.rating-text {
+  font-weight: bold;
+  color: #f39c12;
+}
+
+.genre {
+  font-size: 14px;
+}
+
+.director {
+  font-size: 14px;
+}
+
+
+/* Add custom styles for the footer */
+.footer {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-top: 100px;
+  color: none !important;
+  
+}
+
+.footer h5 {
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.footer p, .footer ul {
+  color: none;
+}
+
+.footer a {
+  color: #ccc;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #fff;
+}
+
+.footer ul.list-unstyled li {
+  margin-bottom: 10px;
+}
+
+.footer ul.list-inline li a {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.footer ul.list-inline li:last-child a {
+  margin-right: 0;
+}
+
+.footer hr {
+  border-top-color: #888;
+}
+
+.footer p {
+  margin-bottom: 0;
 }
