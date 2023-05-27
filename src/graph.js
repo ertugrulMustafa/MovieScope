@@ -1,4 +1,4 @@
-import { API } from '../node_modules/@aws-amplify/api';
+import { API } from '@aws-amplify/api';
 import config from './aws-exports.js';
 import { listMovies } from './graphql/queries.js';
 
