@@ -1,9 +1,30 @@
 import './App.css';
-import "./graph.js";
+import "./backend.js";
+import "./sign_up_event.js"
+import "./sign_up_credentials.js"
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { fetchMovies } from './backend.js';
+
+
+
+
 
 
 function App() {
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const movieList = await fetchMovies();
+      setMovies(movieList);
+    };
+
+    fetchData();
+  }, []);
+  
   return (
+    <Router>
     <div className="App">
         {/* Navbar */}
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -21,8 +42,9 @@ function App() {
                   <a className="nav-link" href="#">Home</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">Movies</a>
+                  <a className="nav-link" href="#">About Us</a>
                 </li>
+                
               </ul>
             </div>
             <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -47,111 +69,29 @@ function App() {
           </form>
         </div>
 
-        {/* Movies Cards Section */}
-        <div className="movies-container">
-          <div className="movie-card">
-            {/* Movie card content */}
+         {/* Movies Cards Section */}
+      <div className="movies-container" id='movie-container'>
+        {movies && movies.map((movie, index) => (
+          <div className="movie-card" key={index}>
             <div className="movie-image">
-              <img src="/images/breaking.jpg" alt="Movie 1" />
+              <img src={movie.image_link} alt=""/>
               <div className="movie-overlay">
                 <div className="movie-info">
                   <div className="rating">
-                    <span className="rating-text">8.5</span>
+                    <div className="movie_name">{movie.movie_name}</div>
+                    <div className="director">{movie.director}</div>
+                    <span className="rating-text">{movie.stars}</span>
                     <span className="rating-star">⭐️</span>
                   </div>
-                  <div className="genre">Action</div>
-                  <div className="director">Director: John Doe</div>
+                  <div className="genre">{movie.genre}</div>
+                  
                 </div>
               </div>
             </div>
           </div>
-          <div className="movie-card">
-            {/* Movie card content */}
-            <div className="movie-image">
-              <img src="../images/fightclub.gif" alt="Movie 1" />
-              <div className="movie-overlay">
-                <div className="movie-info">
-                  <div className="rating">
-                    <span className="rating-text">8.5</span>
-                    <span className="rating-star">⭐️</span>
-                  </div>
-                  <div className="genre">Action</div>
-                  <div className="director">Director: John Doe</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* Add more movie-card divs here */}
-
-          <div className="movie-card">
-            {/* Movie card content */}
-            <div className="movie-image">
-              <img src="../images/batman.gif" alt="Movie 1" />
-              <div className="movie-overlay">
-                <div className="movie-info">
-                  <div className="rating">
-                    <span className="rating-text">8.5</span>
-                    <span className="rating-star">⭐️</span>
-                  </div>
-                  <div className="genre">Action</div>
-                  <div className="director">Director: John Doe</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="movie-card">
-            {/* Movie card content */}
-            <div className="movie-image">
-              <img src="../images/bladerunner.gif" alt="Movie 1" />
-              <div className="movie-overlay">
-                <div className="movie-info">
-                  <div className="rating">
-                    <span className="rating-text">8.5</span>
-                    <span className="rating-star">⭐️</span>
-                  </div>
-                  <div className="genre">Action</div>
-                  <div className="director">Director: John Doe</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="movie-card">
-            {/* Movie card content */}
-            <div className="movie-image">
-              <img src="../images/fightclub.jpg" alt="Movie 1" />
-              <div className="movie-overlay">
-                <div className="movie-info">
-                  <div className="rating">
-                    <span className="rating-text">8.5</span>
-                    <span className="rating-star">⭐️</span>
-                  </div>
-                  <div className="genre">Action</div>
-                  <div className="director">Director: John Doe</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="movie-card">
-            {/* Movie card content */}
-            <div className="movie-image">
-              <img src="../images/breaking.jpg" alt="Movie 1" />
-              <div className="movie-overlay">
-                <div className="movie-info">
-                  <div className="rating">
-                    <span className="rating-text">8.5</span>
-                    <span className="rating-star">⭐️</span>
-                  </div>
-                  <div className="genre">Action</div>
-                  <div className="director">Director: John Doe</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Add more movie-card divs here */}
+        ))}
+      </div>
+      
 
 
       {/* Sign Up Modal */}
@@ -182,6 +122,14 @@ function App() {
           </div>
         </div>
       </div>
+
+
+    
+
+
+
+ 
+
 
       {/* Login Modal */}
       <div className="modal fade" id="loginModal" tabIndex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -252,7 +200,10 @@ function App() {
         </div>
       </footer>
 
+
+     
     </div>
+    </Router>
     
   );
 }

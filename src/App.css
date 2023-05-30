@@ -130,7 +130,7 @@ button[type="submit"] {
 /* Customize search bar */
 .custom-search-input {
   width: 1200px !important; /* Adjust the width as per your preference */
-  border: 4px solid black;
+  border: 2px solid black;
 }
 
 /* Customize search button */
@@ -138,8 +138,8 @@ button[type="submit"] {
   background-color: rgb(255, 255, 255) !important;
   color: rgba(0, 0, 0, 1)!important;
   border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
+  height: 40px;
+  border-radius: 0px;
   transition: background-color 0.3s;
   margin-left: -7px;
 
@@ -148,6 +148,7 @@ button[type="submit"] {
 .custom-search-btn:hover {
   color: rgb(255, 255, 255)!important;
   background-color: rgb(241, 4, 4) !important;
+  border-radius: 0px !important;
 }
 
 .movies-container {
@@ -175,6 +176,7 @@ button[type="submit"] {
   width: 350px;
   height: 400px;
   transition: opacity 0.3s ease-in-out;
+  object-fit: cover;
 }
 
 .movie-card:hover {

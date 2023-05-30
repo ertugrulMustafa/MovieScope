@@ -12,6 +12,7 @@ export const listMovies = /* GraphQL */ `
       writer
       stars
       overview
+      image_link
     }
   }
 `;
@@ -23,6 +24,7 @@ export const listMovieReview = /* GraphQL */ `
       review
       movie_name
       stars
+      image_link
     }
   }
 `;
