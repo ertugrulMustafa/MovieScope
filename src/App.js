@@ -1,5 +1,4 @@
 import './App.css';
-import "./animation.js";
 import "./graph.js";
 
 
@@ -155,8 +154,8 @@ function App() {
         {/* Add more movie-card divs here */}
 
 
-{/* Sign Up Modal */}
-<div className="modal fade" id="signupModal" tabIndex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
+      {/* Sign Up Modal */}
+      <div className="modal fade" id="signupModal" tabIndex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
@@ -253,10 +252,8 @@ function App() {
         </div>
       </footer>
 
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-      <script src="animation.js"></script>
-      <script type="module" src="graph.js"></script>
     </div>
+    
   );
 }
 
