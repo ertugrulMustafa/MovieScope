@@ -1,19 +1,38 @@
 import React from "react";
 import "./movie.css";
-import "./animation.js";
+import "./animation.js"
+import { Outlet, Link } from "react-router-dom";
+import {useState } from 'react';
+import { useParams } from "react-router-dom";
 
-function MovieReview() {
+
+
+
+
+
+
+function MovieInfo() {
     // ... your movie review page code
 
+    //get the movie.movie_name from the link
+    const movieName = useParams().movie_name;
+    console.log(movieName);
+
+    const [activeTab, setActiveTab] = useState('overview');
+    
+
+  const changeTab = (tabName) => {
+    setActiveTab(tabName);
+  };
     return (
         <div className="App">
             {/* Navigation Bar */}
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container">
                     {/* Brand */}
-                    <a className="navbar-brand" href="#">
+                    <Link  className="navbar-brand" to="/">
                         <span className="navbar-text">MovieScope <small>movie review</small></span>
-                    </a>
+                    </Link> 
                     {/* Toggle Button */}
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,10 +42,10 @@ function MovieReview() {
                     <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Home</a>
+                                <Link className="nav-link" to="/">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Movies</a>
+                                <a className="nav-link" href="#">About Us</a>
                             </li>
                         </ul>
                     </div>
@@ -49,7 +68,7 @@ function MovieReview() {
                 <div className="movie-info-page">
                     {/* Movie Image and Buttons */}
                     <div className="movie-image-buttons">
-                        <div className="movie-image">
+                        <div className="movie-image1">
                             <img src="/images/american.gif" alt="" />
                         </div>
                         <div className="movie-buttons">
@@ -59,34 +78,39 @@ function MovieReview() {
                     </div>
 
                     {/* Movie Info and Tabs */}
-                    <div className="movie-info">
-                        <div className="tab-container">
-                            {/* Tab Navigation */}
-                            <div className="tab-nav">
-                                <button className="tab-btn active" onClick={changeTab(event, 'overview')}>Overview</button>
-                                <button className="tab-btn" onClick={changeTab(event, 'review')}>Review</button>
-                            </div>
+                    <div className="movie-information">
+                    <div className="tab-container">
+                        {/* Tab Navigation */}
+                        <div className="tab-nav">
+                        <button className={`tab-btn ${activeTab === 'overview' ? 'active' : ''}`} onClick={() => changeTab('overview')}>
+                            Overview
+                        </button>
+                        <button className={`tab-btn ${activeTab === 'review' ? 'active' : ''}`} onClick={() => changeTab('review')}>
+                            Review
+                        </button>
+                        </div>
 
-                            {/* Tab Content - Overview */}
-                            <div className="tab-content active" style={{ marginTop: "50px" }} id="overview">
-                                <h2>Movie Overview</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at dapibus turpis. Donec convallis sagittis est, eu lacinia tortor interdum sed.</p>
-                                <ul>
-                                    <li>Director: John Smith</li>
-                                    <li>Genre: Action, Thriller</li>
-                                    <li>Release Date: October 1, 2023</li>
-                                    <li>Duration: 120 minutes</li>
-                                    <li>Rating: 4.5/5</li>
-                                </ul>
-                            </div>
+                        {/* Tab Content - Overview */}
+                        <div className={`tab-content ${activeTab === 'overview' ? 'active' : ''}`} style={{ marginTop: '50px' }} id="overview">
+                        <h2>Movie Overview</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at dapibus turpis. Donec convallis sagittis est, eu lacinia tortor interdum sed.</p>
+                        <ul>
+                            <li>Director: John Smith</li>
+                            <li>Genre: Action, Thriller</li>
+                            <li>Release Date: October 1, 2023</li>
+                            <li>Duration: 120 minutes</li>
+                            <li>Rating: 4.5/5</li>
+                        </ul>
+                        </div>
 
-                            {/* Tab Content - Review */}
-                            <div className="tab-content" style={{ marginTop: "50px" }} id="review">
-                                <h2>Movie Review</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at dapibus turpis. Donec convallis sagittis est, eu lacinia tortor interdum sed.</p>
-                            </div>
+                        {/* Tab Content - Review */}
+                        <div className={`tab-content ${activeTab === 'review' ? 'active' : ''}`} style={{ marginTop: '50px' }} id="review">
+                        <h2>Movie Review</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at dapibus turpis. Donec convallis sagittis est, eu lacinia tortor interdum sed.</p>
                         </div>
                     </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -137,4 +161,4 @@ function MovieReview() {
     );
 }
 
-export default MovieReview;
+export default MovieInfo;
