@@ -15,38 +15,90 @@ import cheerio from "cheerio";
 
 
 function MovieInfo() {
-    // ... your movie review page code
     const [Movie, setMovie] = useState({}); // State to store the movie
-
-    //get the movie.movie_name from the link
+    const [castSection, setCastSection] = useState(""); // State to store the cast section HTML
+  
+    // Get the movie.movie_name from the link
     const movieName = useParams().movie_name;
-    console.log(movieName);
-    
+  
     useEffect(() => {
-        // Fetch movies and filter the movie with matching name
-        fetchMovies()
-          .then((movies) => {
-            const foundMovie = movies.find((movie) => movie.movie_name === movieName);
-            setMovie(foundMovie); // Set the found movie in the state
-            console.log('Movie Found:', foundMovie); // Print the found movie separately
-          })
-          .catch((error) => {
-            console.log("Error fetching movies:", error);
-          });
-      }, [movieName]);
-
-
-
-
-
-
-
-
-    
-    const [activeTab, setActiveTab] = useState('overview');
+      // Fetch movies and filter the movie with matching name
+      fetchMovies()
+        .then((movies) => {
+          const foundMovie = movies.find((movie) => movie.movie_name === movieName);
+          setMovie(foundMovie); // Set the found movie in the state
+          console.log('Movie Found:', foundMovie); // Print the found movie separately
+  
+          // Search for the movie on Google and extract the IMDb URL
+          searchAndExtractIMDbURL(foundMovie.movie_name)
+            .then((imdbURL) => {
+              // Fetch the IMDb page and extract the cast information
+              extractCastInformation(imdbURL)
+                .then((castHTML) => {
+                  setCastSection(castHTML);
+                })
+                .catch((error) => {
+                  console.error("Error extracting cast information:", error);
+                });
+            })
+            .catch((error) => {
+              console.error("Error searching on Google and extracting IMDb URL:", error);
+            });
+        })
+        .catch((error) => {
+          console.log("Error fetching movies:", error);
+        });
+    }, [movieName]);
+  
+    // Function to search on Google and extract IMDb URL
+    const searchAndExtractIMDbURL = async (movieName) => {
+      try {
+        // Perform a Google search with the movie name
+        const searchQuery = `https://www.google.com/search?q=${encodeURIComponent(
+          `${movieName} IMDb`
+        )}`;
+        const searchResponse = await axios.get(searchQuery);
+  
+        // Extract the IMDb URL from the search results
+        const $ = cheerio.load(searchResponse.data);
+        const imdbURL = $('div.g > div > div > div > a').attr("href");
+        if (imdbURL) {
+          // Remove unnecessary parameters from the URL
+          const cleanIMDbURL = imdbURL.replace("/url?q=", "").split("&")[0];
+          return cleanIMDbURL;
+        } else {
+          throw new Error("IMDb URL not found");
+        }
+      } catch (error) {
+        console.error("Error searching on Google:", error);
+        throw error;
+      }
+    };
+  
+    // Function to extract cast information from IMDb page
+    const extractCastInformation = async (imdbURL) => {
+      try {
+        // Fetch the IMDb page
+        const imdbResponse = await axios.get(imdbURL);
+  
+        // Extract the cast information from the IMDb page using cheerio
+        const $ = cheerio.load(imdbResponse.data);
+        const castSection = $('section.ipc-page-section[data-testid="title-cast"]').html();
+        if (castSection) {
+          return castSection;
+        } else {
+          throw new Error("Cast section not found on IMDb page");
+        }
+      } catch (error) {
+        console.error("Error extracting cast information:", error);
+        throw error;
+      }
+    };
+  
+    const [activeTab, setActiveTab] = useState("overview");
     const changeTab = (tabName) => {
-    setActiveTab(tabName);
-  };
+      setActiveTab(tabName);
+    };
     return (
         <div className="App">
             {/* Navigation Bar */}
@@ -125,6 +177,7 @@ function MovieInfo() {
                         <h5>Cast</h5>
                         <p>{Movie.casts}</p>
                         {/* here there should be cast section */}
+                        <div dangerouslySetInnerHTML={{ __html: castSection }} />
 
                         </div>
                         
