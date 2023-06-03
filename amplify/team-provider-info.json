@@ -9,7 +9,8 @@
       "UnauthRoleName": "amplify-reactmovie-dev-220601-unauthRole",
       "StackName": "amplify-reactmovie-dev-220601",
       "StackId": "arn:aws:cloudformation:us-east-1:516880215961:stack/amplify-reactmovie-dev-220601/5d840df0-fbf8-11ed-8a6d-12827aab473d",
-      "AmplifyAppId": "d1fy2sjg4mx7oi"
+      "AmplifyAppId": "d1fy2sjg4mx7oi",
+      "Identity pool ID" : "us-east-1:ee2696cf-ca07-4437-b2e0-48c4b2c1607f"
     }
   }
 }
