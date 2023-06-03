@@ -13,6 +13,11 @@ export const listMovies = /* GraphQL */ `
       stars
       overview
       image_link
+      casts
+      story_line
+      trailer_link
+      imdb_link
+      imdb_rating
     }
   }
 `;
@@ -25,6 +30,11 @@ export const listMovieReview = /* GraphQL */ `
       movie_name
       stars
       image_link
+      casts
+      story_line
+      trailer_link
+      imdb_link
+      imdb_rating
     }
   }
 `;
