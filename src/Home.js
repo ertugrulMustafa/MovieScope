@@ -1,5 +1,6 @@
 import "./home.css";
 import "./sign_up_event.js";
+import "./login_event.js";
 import React, { useState, useEffect } from 'react';
 import { Outlet, Link } from "react-router-dom";
 import { fetchMovies } from './backend.js';
@@ -112,16 +113,18 @@ function HomePage() {
                   <label htmlFor="signupPassword" className="form-label">Password</label>
                   <input type="password" className="form-control" id="signupPassword" placeholder="Password" />
                 </div>
-                <div className="mb-3">
-                  <label htmlFor="signupConfirmPassword" className="form-label">Confirm Password</label>
-                  <input type="password" className="form-control" id="signupConfirmPassword" placeholder="Confirm Password" />
+                {/* New field for confirmation code */}
+                <div className="mb-3" id="confirmationCodeField" style={{ display: 'none' }}>
+                  <label htmlFor="confirmationCode" className="form-label">Confirmation Code</label>
+                  <input type="text" className="form-control" id="confirmationCode" placeholder="Enter confirmation code" />
                 </div>
-                <button type="submit" className="btn btn-primary">Sign Up</button>
+                <button type="submit" className="btn btn-primary" id="signUpButton">Sign Up</button>
               </form>
             </div>
           </div>
         </div>
       </div>
+
 
 
     

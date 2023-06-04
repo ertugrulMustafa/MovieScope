@@ -243,9 +243,68 @@ button[type="submit"] {
   cursor: pointer;
 }
 
+
+
 .btn:hover {
   background-color: #0056b3;
 }
+
+
+.btnYoutube{
+  background-color: #c0101e;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  width: 150px;
+  height: 45px;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+
+.btnYoutube:hover{
+  background-color: #ff0000;
+}
+
+.movie-youtube-text {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+
+}
+
+.movie-imdb-text {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-weight: bold;
+
+
+}
+
+.btnImdb{
+  background-color: #f3bd0a;
+  color: #000000 !important;
+  text-decoration: none;
+  cursor: pointer;
+  width: 170px;
+  height: 55px;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+
+.btnImdb:hover{
+  background-color: #ffa600;
+}
+
+
+.tab-btn-text{
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
 
 
 
@@ -310,6 +369,12 @@ button[type="submit"] {
   color: #e28e2d !important;
 }
 
+.movie-button-text{
+  font-size: 14px;
+  color: #ffffff !important;
+  text-decoration: none;
+}
+
 .movie-details-header{
   font-size: 15px;
   font-weight: bold;
@@ -320,6 +385,12 @@ button[type="submit"] {
   width: 500px;
 }
 
+.movie-plot-text{
+  color: rgb(236, 236, 236);
+  font-size: 15px;
+}
+
+
 .overview {
   padding: 20px;
 }
@@ -329,8 +400,6 @@ button[type="submit"] {
 }
 
 
-.tab-btn-text {
-  color: white;
-}
+
 
 

@@ -95,8 +95,8 @@ function MovieInfo() {
                             <img src= {Movie.image_link} alt="" />
                         </div>
                         <div className="movie-buttons">
-                            <button className="btn btn-primary"><a className="movie-details-text" href={Movie.trailer_link}>Watch Trailer</a></button>
-                            <button className="btn btn-primary">Go to IMDb Page</button>
+                            <button className="btnYoutube"><a className="movie-youtube-text" href={Movie.trailer_link}>Watch Trailer</a></button>
+                            <button className="btnImdb"><a className="movie-imdb-text" href={Movie.imdb_link}>Go to IMDb page</a></button>
                         </div>
                     </div>
 
@@ -119,17 +119,17 @@ function MovieInfo() {
                         <div className="movie-plot">
                         
                         <h5> Overview</h5>
-                        <p>{Movie.overview}</p>
+                        <p className="movie-plot-text">{Movie.overview}</p>
 
                         <div className="cast">
                         <h5>Cast</h5>
-                        <p>{Movie.casts}</p>
+                        <p className="movie-plot-text">{Movie.casts}</p>
                         {/* here there should be cast section */}
 
                         </div>
                         
                         <h5>Storyline</h5>
-                        <p>{Movie.story_line}</p>
+                        <p className="movie-plot-text">{Movie.story_line}</p>
                         
                         </div>
                         <div className="movie-details">

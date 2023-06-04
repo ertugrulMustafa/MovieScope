@@ -1,39 +1,52 @@
 import { handleSignUp } from './sign_up_credentials';
+import { handleConfirm } from './confirmationCredentials';
 
-// Start after everything is loaded
 document.addEventListener('DOMContentLoaded', () => {
-
-  // Wait for 2 seconds here
-  setTimeout(function(){
-    
-    // Get references to the form elements
+  setTimeout(() => {
     const signUpForm = document.querySelector('#signupModal form');
     const emailInput = signUpForm.querySelector('#signupEmail');
     const passwordInput = signUpForm.querySelector('#signupPassword');
+    const confirmationCodeField = signUpForm.querySelector('#confirmationCodeField');
+    const confirmationCodeInput = signUpForm.querySelector('#confirmationCode');
+    const signUpButton = signUpForm.querySelector('#signUpButton');
 
-    // Add event listener to the sign-up form submit button
     signUpForm.addEventListener('submit', async (event) => {
-      event.preventDefault(); // Prevent the form from being submitted normally
+      event.preventDefault();
 
       const email = emailInput.value;
       const password = passwordInput.value;
 
       try {
-        // Call the handleSignUp function with the email and password values
         const response = await handleSignUp(email, password);
 
-        // Handle the response or perform any additional actions
         console.log('Sign-up successful:', response);
 
-        // Reset the form
-        signUpForm.reset();
-
-
+        // Show the confirmation code field if sign-up was successful
+        confirmationCodeField.style.display = 'block';
+        signUpButton.innerText = 'Confirm';
       } catch (error) {
-        // Handle any errors that occurred during sign-up
         console.error('Sign-up error:', error);
+        return; // Exit the function if sign-up fails
       }
-    });
 
+      signUpForm.removeEventListener('submit', handleSignUp); // Remove initial sign-up form event listener
+
+      signUpForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const confirmationCode = confirmationCodeInput.value;
+        console.log('Confirmation code:', confirmationCode);
+
+        try {
+          const confirmed = await handleConfirm(email, confirmationCode);
+          console.log('Confirmation successful:', confirmed);
+          //here I want to redirect to the home page
+          window.location.href = "http://localhost:3000/";
+        } catch (error) {
+          console.error('Confirmation error:', error);
+        }
+      });
+
+    });
   }, 2000);
 });

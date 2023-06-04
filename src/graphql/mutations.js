@@ -26,3 +26,8 @@ export const delete_movie = /* GraphQL */ `
     delete_movie(movie_name: $movie_name)
   }
 `;
+export const log_in = /* GraphQL */ `
+  mutation Log_in($email: String, $password: String) {
+    log_in(email: $email, password: $password)
+  }
+`;
