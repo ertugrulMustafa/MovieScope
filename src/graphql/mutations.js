@@ -21,13 +21,13 @@ export const confirm_sign_up = /* GraphQL */ `
     confirm_sign_up(email: $email, confirmation_code: $confirmation_code)
   }
 `;
-export const delete_movie = /* GraphQL */ `
-  mutation Delete_movie($movie_name: String) {
-    delete_movie(movie_name: $movie_name)
-  }
-`;
 export const log_in = /* GraphQL */ `
   mutation Log_in($email: String, $password: String) {
     log_in(email: $email, password: $password)
+  }
+`;
+export const delete_movie = /* GraphQL */ `
+  mutation Delete_movie($movie_name: String) {
+    delete_movie(movie_name: $movie_name)
   }
 `;

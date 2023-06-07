@@ -4,6 +4,7 @@ import "./login_event.js";
 import React, { useState, useEffect } from 'react';
 import { Outlet, Link } from "react-router-dom";
 import { fetchMovies } from './backend.js';
+import { searchMovies } from './search.js';
 
 
 
@@ -12,6 +13,10 @@ import { fetchMovies } from './backend.js';
 
 function HomePage() {
   const [movies, setMovies] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +26,32 @@ function HomePage() {
 
     fetchData();
   }, []);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+
+  const handleSearch = async (event) => {
+    event.preventDefault();
+    try {
+      const searchQuery = event.target.elements.searchQuery.value;
+      const response = await searchMovies(searchQuery);
+      if (response && response.length > 0) {
+        setSearchResults(response);
+        setDropdownOpen(true);
+      } else {
+        setSearchResults([]);
+        setDropdownOpen(false);
+      }
+    } catch (error) {
+      console.error('Search Failed:', error);
+    }
+  };
+
+  const handleDropdownClose = () => {
+    setDropdownOpen(false);
+  };
   
   return (
     <div className="App">
@@ -45,27 +76,58 @@ function HomePage() {
                 
               </ul>
             </div>
-            <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <div className="collapse navbar-collapse justify-content-end" id="navbarNavButtons">
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <a className="nav-link signup-btn" href="#" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</a>
+                  <a className="nav-link signup-btn" href="#" id="signUpButton" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link login-btn" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                  <a className="nav-link login-btn" href="#" id="loginButton" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                </li>
+                <li className="nav-item">
+                  {/* Profile Section */}
+                  <div id="profileSection" style={{ display: 'none' }}>
+                    <img className="avatarImage" id="avatarImage" src="/images/user.png" alt="" />
+                    <span style={{ color: "white" }} id="emailText"></span>
+                    <button className="btnLogout" id="logoutButton" onClick={handleLogout}>
+                      Logout
+                    </button>
+                  </div>
                 </li>
               </ul>
             </div>
           </div>
         </nav>
+        
+        
+       {/* Search Movies Section */}
+      <div className="container" style={{ marginTop: '100px' }}>
+        <form className="form-inline my-4" style={{ display: 'flex', flexDirection: 'row' }} onSubmit={handleSearch}>
+          <input className="form-control me-2 custom-search-input" type="search" placeholder="Search Movies" aria-label="Search" name="searchQuery" />
+          <button className="btn btn-outline-primary my-2 my-sm-0 custom-search-btn" type="submit">Search</button>
+        </form>
+        {searchResults.length > 0 && (
+          <div
+            className={`dropdown ${dropdownOpen ? 'show' : ''}`}
+            style={{ position: 'relative' }}
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => setDropdownOpen(false)}
+          >
+            <button className="btn btn-primary dropdown-toggle" type="button" id="searchResultsDropdown" data-bs-toggle="dropdown" aria-expanded={dropdownOpen}>
+              Search Results
+            </button>
+            <ul className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`} aria-labelledby="searchResultsDropdown">
+              {searchResults.map((result, index) => (
+                <li key={index}>
+                  <Link to={`/movie-info/${result}`} onClick={handleDropdownClose}>{result}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
 
-        {/* Search Movies Section */}
-        <div className="container" style={{ marginTop: '100px' }}>
-          <form className="form-inline my-4" style={{ display: 'flex', flexDirection: 'row' }}>
-            <input className="form-control me-2 custom-search-input" type="search" placeholder="Search Movies"
-              aria-label="Search" />
-            <button className="btn btn-outline-primary my-2 my-sm-0 custom-search-btn" type="submit">Search</button>
-          </form>
-        </div>
+
 
          {/* Movies Cards Section */}
       <div className="movies-container" id='movie-container'>
@@ -127,12 +189,6 @@ function HomePage() {
 
 
 
-    
-
-
-
- 
-
 
       {/* Login Modal */}
       <div className="modal fade" id="loginModal" tabIndex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -152,12 +208,15 @@ function HomePage() {
                   <label htmlFor="loginPassword" className="form-label">Password</label>
                   <input type="password" className="form-control" id="loginPassword" placeholder="Password" />
                 </div>
-                <button type="submit" className="btn btn-primary">Login</button>
+                <button type="submit" className="btn btn-primary" id="loginButton">Login</button>
               </form>
             </div>
           </div>
         </div>
       </div>
+
+      
+
 
       {/* Footer */}
       <footer className="footer text-light">
@@ -212,4 +271,3 @@ function HomePage() {
 }
 
 export default HomePage;
-

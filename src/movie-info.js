@@ -4,8 +4,10 @@ import { Outlet, Link } from "react-router-dom";
 import {useState,useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { fetchMovies } from './backend.js';
-import axios from "axios";
-import cheerio from "cheerio";
+import { fetchReviews } from './get_reviews.js';
+import "./login_event.js";
+import { openReviewTextBox, submitReview } from './review.js';
+
 
 
 
@@ -35,8 +37,44 @@ function MovieInfo() {
           });
       }, [movieName]);
 
+    const [reviews, setReviews] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+        const reviewList = await fetchReviews(movieName);
+        setReviews(reviewList);
+        };
+
+        fetchData();
+    }, []);
 
 
+    useEffect(() => {
+        // Check if the user is already logged in
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const signUpButton = document.querySelector('#signUpButton');
+        const loginButton = document.querySelector('#loginButton');
+        const profileSection = document.querySelector('#profileSection');
+    
+        if (isLoggedIn === 'true') {
+          signUpButton.style.display = 'none';
+          loginButton.style.display = 'none';
+          profileSection.style.display = 'block';
+        }
+      }, []);
+
+      const handleLogout = () => {
+        // Clear localStorage
+        localStorage.clear();
+      };
+
+    const [rating, setRating] = useState(0);
+      
+    const handleRatingChange = (event) => {
+        setRating(parseInt(event.target.value, 6));
+    };
+      
+       
 
 
 
@@ -76,10 +114,20 @@ function MovieInfo() {
                     <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <a className="nav-link signup-btn" href="#" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</a>
+                                <a className="nav-link signup-btn" id="signUpButton" href="#" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link login-btn" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                                <a className="nav-link login-btn" id="loginButton" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                            </li>
+                            <li className="nav-item">
+                            {/* Profile Section */}
+                            <div id="profileSection" style={{ display: 'none' }}>
+                                <img className="avatarImage" id="avatarImage" src="/images/user.png" alt="" />
+                                <span style={{ color: "white" }} id="emailText"></span>
+                                <button className="btnLogout" id="logoutButton" onClick={handleLogout}>
+                                Logout
+                                </button>
+                            </div>
                             </li>
                         </ul>
                     </div>
@@ -87,7 +135,7 @@ function MovieInfo() {
             </nav>
 
             {/* Movie Info Container */}
-            <div className="movie-info-container">
+            <div className="movie-info-container" style={{overflowY:"scroll" ,overflowX:"hidden"}}>
                 <div className="movie-info-page">
                     {/* Movie Image and Buttons */}
                     <div className="movie-image-buttons">
@@ -109,7 +157,7 @@ function MovieInfo() {
                             <span className="tab-btn-text">Overview</span>
                         </button>
                         <button className={`tab-btn ${activeTab === 'review' ? 'active' : ''}`} onClick={() => changeTab('review')}>
-                            <span className="tab-btn-text">Review</span>
+                            <span className="tab-btn-text">Reviews</span>
                         </button>
                         </div>
 
@@ -144,10 +192,56 @@ function MovieInfo() {
                         </div>
 
                         {/* Tab Content - Review */}
-                        <div className={`tab-content ${activeTab === 'review' ? 'active' : ''}`} style={{ marginTop: '50px' }} id="review">
-                        <h2>Movie Review</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at dapibus turpis. Donec convallis sagittis est, eu lacinia tortor interdum sed.</p>
+                        <div className={`tab-content ${activeTab === 'review' ? 'active' : ''}`} id="review">
+                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                            <h2>Movie Reviews</h2>
+                            <button className="write-review-btn" onClick={() => openReviewTextBox()}>Write a Review</button>
+                            </div>
+                            <div className="review-textbox" id="reviewTextBox" style={{ display: 'none' }}>
+                            <textarea className="reviewTextArea" rows="3" id="reviewTextArea" placeholder="Write your review"></textarea>
+                            <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
+                            <button className="submit-review-btn" onClick={() => submitReview(Movie.movie_name, rating)}>Submit</button>
+                            {/* Slider component */}
+                            <div>
+                            <input type="range" min="0" max="5" id="slider" style={{display:"none"}} value={rating} onChange={handleRatingChange} />
+                            <div>{rating}</div>
+                            </div>
+                            </div>
+                            </div>
+
+                            <div className="review-container" style={{ marginTop: "45px"}}>
+                            {/* List the reviews */}
+                            {reviews.map((review, index) => {
+                                const starCount = parseInt(review.stars, 10);
+                                return (
+                                <div className="review" style={{ display: "flex", flexDirection: "row", padding: "0px" ,marginBottom:"65px"}} key={index}>
+                                    <div className="review-avatar">
+                                    <img className="avatarImage" src="/images/user.png" alt="" />
+                                    </div>
+                                    <div className="review-content" style={{ marginLeft: "15px",justifyContent: "space-between" }}>
+                                        <div style={{ display: "flex" }}>
+                                        <div className="review-username">{review.username}</div>
+                                        <div className="review-rating" style={{ marginLeft: "10px" }}>
+                                            {/* Display stars */}
+                                            {Array(starCount).fill().map((_, starIndex) => (
+                                            <span key={starIndex}>⭐</span>
+                                            ))}
+                                        </div>
+                                        </div>
+                                        <div className="review-date" style={{}}>{review.created_at}</div>
+                                    <div className="review-comment" style={{ marginTop: "15px" }}>{review.review}</div>
+                                    </div>
+                                </div>
+                                );
+                            })}
+                            </div>
                         </div>
+
+                        
+
+
+                        
+
                     </div>
                     </div>
 

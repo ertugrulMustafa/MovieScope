@@ -22,19 +22,18 @@ export const listMovies = /* GraphQL */ `
   }
 `;
 export const listMovieReview = /* GraphQL */ `
-  query ListMovieReview {
-    listMovieReview {
+  query ListMovieReview($movie_name: String) {
+    listMovieReview(movie_name: $movie_name) {
       created_at
       username
       review
       movie_name
       stars
-      image_link
-      casts
-      story_line
-      trailer_link
-      imdb_link
-      imdb_rating
     }
+  }
+`;
+export const search = /* GraphQL */ `
+  query Search($query: String) {
+    search(query: $query)
   }
 `;

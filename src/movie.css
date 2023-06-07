@@ -402,4 +402,36 @@ button[type="submit"] {
 
 
 
+.review-textbox {
+  display: none ;
+  margin-top: 20px !important;
+}
+
+.reviewTextArea {
+  padding: 10px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px !important;
+  resize: vertical !important;
+  width: 700px !important;
+
+}
+
+/* Review Button */
+.write-review-btn {
+  background-color: #4caf50 !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
+
+.write-review-btn:hover {
+  background-color: #45a049 !important;
+}
+
+
+
+
+
 
