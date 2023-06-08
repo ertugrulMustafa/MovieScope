@@ -1,5 +1,8 @@
 import { API, graphqlOperation } from '@aws-amplify/api';
 import { log_in } from './graphql/mutations';
+import { Amplify, Auth } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
 
 // Function to handle confirm form submission
 export async function handleLogin(email, password) {

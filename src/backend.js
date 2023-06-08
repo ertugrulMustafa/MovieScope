@@ -2,6 +2,7 @@ import { API } from '@aws-amplify/api';
 import config from './aws-exports.js';
 import { listMovies } from './graphql/queries.js';
 
+
 API.configure(config);
 
 async function fetchMovies() {

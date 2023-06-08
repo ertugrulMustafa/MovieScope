@@ -1,6 +1,9 @@
 import { API } from '@aws-amplify/api';
 import config from './aws-exports.js';
 import { listMovieReview } from './graphql/queries.js';
+import { Amplify, Auth } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
 
 API.configure(config);
 

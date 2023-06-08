@@ -1,6 +1,8 @@
 import { handleSignUp } from './sign_up_credentials';
 import { handleConfirm } from './confirmationCredentials';
-
+import { Amplify, Auth } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     const signUpForm = document.querySelector('#signupModal form');
