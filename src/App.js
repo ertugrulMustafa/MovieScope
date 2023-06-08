@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import HomePage from "./Home";
 import MovieInfo from "./movie-info";
+import { Amplify, Auth } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
 
 
 function App() {
