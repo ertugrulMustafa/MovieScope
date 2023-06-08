@@ -5,6 +5,9 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, Link } from "react-router-dom";
 import { fetchMovies } from './backend.js';
 import { searchMovies } from './search.js';
+import { Amplify, Auth } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
 
 
 
