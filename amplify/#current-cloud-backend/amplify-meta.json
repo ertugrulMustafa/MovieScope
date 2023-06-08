@@ -1,34 +1,75 @@
 {
-    "providers": {
-        "awscloudformation": {
-            "AuthRoleName": "amplify-reactmovie-dev-220601-authRole",
-            "UnauthRoleArn": "arn:aws:iam::516880215961:role/amplify-reactmovie-dev-220601-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::516880215961:role/amplify-reactmovie-dev-220601-authRole",
-            "Region": "us-east-1",
-            "DeploymentBucketName": "amplify-reactmovie-dev-220601-deployment",
-            "UnauthRoleName": "amplify-reactmovie-dev-220601-unauthRole",
-            "StackName": "amplify-reactmovie-dev-220601",
-            "StackId": "arn:aws:cloudformation:us-east-1:516880215961:stack/amplify-reactmovie-dev-220601/5d840df0-fbf8-11ed-8a6d-12827aab473d",
-            "AmplifyAppId": "d1fy2sjg4mx7oi"
-        }
-    },
-    "api": {
-        "My AppSync API": {
-            "service": "AppSync",
-            "output": {
-                "authConfig": {
-                    "defaultAuthentication": {
-                        "authenticationType": "API_KEY"
-                    },
-                    "additionalAuthenticationProviders": null
-                },
-                "GraphQLAPIIdOutput": "bjffpgpadfeoddvigrf6kiq4ry",
-                "GraphQLAPIEndpointOutput": "https://dy6daoimk5aytntxn52wesvj64.appsync-api.us-east-1.amazonaws.com/graphql",
-                "name": "My AppSync API",
-                "region": "us-east-1",
-                "GraphQLAPIKeyOutput": "da2-3nnacidngzfsbjiyz6prwcmnpq"
-            },
-            "lastPushTimeStamp": "2023-05-26T19:07:14.225Z"
-        }
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-reactmovie-dev-220601-authRole",
+      "UnauthRoleArn": "arn:aws:iam::516880215961:role/amplify-reactmovie-dev-220601-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::516880215961:role/amplify-reactmovie-dev-220601-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-reactmovie-dev-220601-deployment",
+      "UnauthRoleName": "amplify-reactmovie-dev-220601-unauthRole",
+      "StackName": "amplify-reactmovie-dev-220601",
+      "StackId": "arn:aws:cloudformation:us-east-1:516880215961:stack/amplify-reactmovie-dev-220601/5d840df0-fbf8-11ed-8a6d-12827aab473d",
+      "AmplifyAppId": "d1fy2sjg4mx7oi"
     }
+  },
+  "api": {
+    "My AppSync API": {
+      "service": "AppSync",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY"
+          },
+          "additionalAuthenticationProviders": null
+        },
+        "GraphQLAPIIdOutput": "bjffpgpadfeoddvigrf6kiq4ry",
+        "GraphQLAPIEndpointOutput": "https://dy6daoimk5aytntxn52wesvj64.appsync-api.us-east-1.amazonaws.com/graphql",
+        "name": "My AppSync API",
+        "region": "us-east-1",
+        "GraphQLAPIKeyOutput": "da2-3nnacidngzfsbjiyz6prwcmnpq"
+      },
+      "lastPushTimeStamp": "2023-05-26T19:07:14.225Z"
+    }
+  },
+  "auth": {
+    "reactmovie7f5093fc": {
+      "service": "Cognito",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "output": {
+        "UserPoolId": "us-east-1_01AbFIfIJ",
+        "UserPoolName": "CinemaScopeUserPool",
+        "AppClientID": "6nngqppuopja0e5pqev4cqhql5",
+        "AppClientIDWeb": "6nngqppuopja0e5pqev4cqhql5",
+        "IdentityPoolId": "us-east-1:ee2696cf-ca07-4437-b2e0-48c4b2c1607f",
+        "IdentityPoolName": "reactMovie"
+      },
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_UPPERCASE",
+            "REQUIRES_NUMBERS",
+            "REQUIRES_SYMBOLS"
+          ]
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "lastPushTimeStamp": "2023-06-08T10:33:33.093Z"
+    }
+  }
 }
